@@ -172,7 +172,7 @@ const sortedProducts = [...filteredProducts].sort((a, b) => {
                 
                 
                 {sortedProducts.map((product) => (
-                    <div key={product.id}
+                <div key={`${product.id}-${product.name}`}
                     className="group rounded-2xl bg-white p-3 shadow-[0_4px_18px_rgba(74,48,41,0.05)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_14px_30px_rgba(74,48,41,0.12)]">
                         <div className="relative overflow-hidden rounded-xl bg-[#F0E8E1]">
                             {product.originalPrice && product.originalPrice > product.price && (

@@ -26,6 +26,8 @@ import AdminWishlistAnalytics from "./admin/pages/AdminWishlistAnalytics";
 import AdminCustomers from "./admin/pages/AdminCustomers";
 import AdminSettings from "./admin/pages/AdminSettings";
 import AdminActivityLogs from "./admin/pages/AdminActivityLogs";
+import AdminNewsletter from "./admin/pages/AdminNewsletter";
+import AdminContactMessages from "./admin/pages/AdminContactMessages";
 
 function App() {
   return (
@@ -97,6 +99,18 @@ function App() {
         <Route path="/admin/activity-logs" element={
           <AdminProtectedRoute>
             <AdminActivityLogs />
+            </AdminProtectedRoute>
+        }/>
+
+        <Route path="/admin/newsletter" element={
+          <AdminProtectedRoute>
+            <AdminNewsletter />
+            </AdminProtectedRoute>
+        }/>
+
+        <Route path="/admin/contact-messages" element={
+          <AdminProtectedRoute>
+            <AdminContactMessages />
             </AdminProtectedRoute>
         }/>
 

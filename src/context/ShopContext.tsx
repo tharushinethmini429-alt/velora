@@ -93,6 +93,25 @@ export function ShopProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem("velora-wishlist", JSON.stringify(wishlist));
     }, [wishlist]);
 
+    // Update old cart items with MongoDB IDs
+useEffect(() => {
+    if (productsLoading || products.length === 0) return;
+
+    setCartItems((previousItems) =>
+        previousItems.map((item) => {
+            const latestProduct = products.find(
+                (product) =>
+                    product.id === item.id ||
+                    product.name === item.name
+            );
+
+            return latestProduct
+                ? { ...latestProduct, quantity: item.quantity }
+                : item;
+        })
+    );
+}, [products, productsLoading]);
+
     // Load and sync wishlist with MongoDB
     useEffect(() => {
         if (productsLoading || products.length === 0) return;

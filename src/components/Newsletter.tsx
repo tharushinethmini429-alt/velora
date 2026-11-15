@@ -1,17 +1,24 @@
 import {useState } from "react";
 import { ArrowRight, Mail, CheckCircle } from "lucide-react";
+import { subscribeToNewsletter } from "../services/newsletterService";
 
 function Newsletter() {
     const [email, setEmail] = useState("");
     const [subscribed, setSubscribed] = useState(false);
 
-    const handleSubscribe = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (email.trim()) {
-            setSubscribed(true);
-            setEmail("");
-        }
-    };
+    const handleSubscribe = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!email.trim()) return;
+
+    try {
+        await subscribeToNewsletter(email);
+        setSubscribed(true);
+        setEmail("");
+    } catch (error) {
+        alert(error instanceof Error ? error.message : "Subscription failed.");
+    }
+};
     return (
         <section className="bg-[#F0E8E1] px-6 py-20 md:py-24">
             <div className="mx-auto max-w-3xl text-center">

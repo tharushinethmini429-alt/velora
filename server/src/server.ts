@@ -8,6 +8,8 @@ import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import wishlistRoutes from "./routes/wishlistRoutes.js";
+import newsletterRoutes from "./routes/newsletterRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,7 +26,8 @@ app.use("/api/orders", orderRoutes);
 
 // Wishlist API routes
 app.use("/api/wishlist", wishlistRoutes);
-
+app.use("/api/newsletter", newsletterRoutes);
+app.use("/api/contact", contactRoutes);
 app.use("/api/admin", adminRoutes);
 
 // Welcome API

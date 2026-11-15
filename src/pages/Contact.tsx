@@ -13,9 +13,12 @@ function Contact() {
 
     const [submitted, setSubmitted] = useState(false);
     const [message, setMessage] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
 
     const qrRef = useRef<HTMLCanvasElement>(null);
-    const storeUrl = `${window.location.origin}/`;
+    const storeUrl = "http://172.20.10.5:5173/";
     const handleDownloadQR = () => {
         const canvas = qrRef.current;
         
@@ -91,12 +94,44 @@ function Contact() {
                     <h2 className="mt-3 font-serif text-3xl text-espresso md:text-4xl">How Can We Help You?</h2>
                     <p className="mt-4 text-sm leading-7 text-brown">Complete the form below and share what's on your mind.</p>
                     <form
-                    onSubmit={(event) => {
+                    onSubmit={async (event) => {
                         event.preventDefault();
+                        const form = event.currentTarget;
+                        const formData = new FormData(form);
+                        const contactData = {
+                            name: String(formData.get("name") || ""),
+                            email: String(formData.get("email") || ""),
+                            subject: String(formData.get("subject") || ""),
+                            message: String(formData.get("message") || ""),
+                        };
+                        setIsSubmitting(true);
+                        setErrorMessage("");
+                        setSubmitted(false);
+                    try {
+                        const response = await fetch("http://localhost:5000/api/contact", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(contactData),
+                        });
+                        const data = await response.json();
+                        if (!response.ok) {
+                            throw new Error(data.message || "Failed to send your message.");
+                        }
                         setSubmitted(true);
                         setMessage("");
-                        event.currentTarget.reset();
-                    }}
+                        form.reset();
+                    } catch (error) {
+                        setErrorMessage(
+                            error instanceof Error
+                            ? error.message
+                            : "Something went wrong. Please try again."
+                        );
+                    } finally {
+                        setIsSubmitting(false);
+                    }
+                }}
                     onChange={() => setSubmitted(false)} className="mt-8 space-y-5">
                 <div>
                     <label htmlFor="contact-name" className="mb-2 block text-xs font-medium text-espresso">Full Name</label>
@@ -125,18 +160,21 @@ function Contact() {
                     <p className="mt-2 text-right text-xs text-brown">{message.length}/1000 characters</p>
                 </div>
                 
-                <button type="submit" className="flex w-full items-center justify-center gap-3 bg-rose px-6 py-4 text-xs font-semibold uppercase tracking-widest 
+                <button type="submit" disabled={isSubmitting} className="flex w-full items-center justify-center gap-3 bg-rose px-6 py-4 text-xs font-semibold uppercase tracking-widest
                 text-white transition hover:bg-mauve">
                     <Send size={16} />
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Send Message"}
                 </button>
+
+                {errorMessage && (
+                    <p role="alert" className="text-sm text-red-600">{errorMessage}</p>
+                )}
                 
                 {submitted && (
                     <p role="status" className="border border-dusty-rose bg-cream p-4 text-sm leading-6 text-brown">
-                        Thank you for contacting Velora! This is a demo form. Your message has not been sent yet.</p>
+                    Thank you for contacting Velora! Your message has been sent successfully. Our team will get back to you soon.</p>
                 )}
             </form>
-            <p className="mt-4 text-xs leading-6 text-brown"> Demo project: the form is ready for backend and email integration.</p>
             </div>
             
             {/* QR CODE CARD */}

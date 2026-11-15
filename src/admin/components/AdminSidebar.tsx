@@ -7,6 +7,8 @@ import {
     LogOut,
     Users,
     Activity,
+    Mail,
+    MessageSquare,
 } from "lucide-react";
 
 import { useLocation, useNavigate } from "react-router-dom";
@@ -19,10 +21,12 @@ function AdminSidebar() {
         { name: "Dashboard", icon: LayoutDashboard, path: "/admin/dashboard" },
         { name: "Products", icon: Package, path: "/admin/products" },
         { name: "Orders", icon: ShoppingCart, path: "/admin/orders" },
-        { name: "Wishlist Analytics", icon: Heart, path: "/admin/wishlist" },
+        { name: "Wishlist", icon: Heart, path: "/admin/wishlist" },
         { name: "Customers", icon: Users, path: "/admin/customers" },
-        { name: "Settings", icon: Settings, path: "/admin/settings" },
         { name: "Activity Logs", icon: Activity, path: "/admin/activity-logs" },
+        { name: "Newsletter", icon: Mail, path: "/admin/newsletter" },
+        { name: "Contact Messages", icon: MessageSquare, path: "/admin/contact-messages" },
+        { name: "Settings", icon: Settings, path: "/admin/settings" },
     ];
 
     const handleLogout = async () => {

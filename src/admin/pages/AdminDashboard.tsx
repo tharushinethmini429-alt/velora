@@ -19,7 +19,6 @@ import {
     PieChart,
     Pie,
     Cell,
-    Legend,
 } from "recharts";
 
 type DashboardStats = {
@@ -318,19 +317,10 @@ useEffect(() => {
             <div className="relative mt-6 h-56">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-
-                        <text x="50%" y="47%" textAnchor="middle" dominantBaseline="middle" className="fill-[#302721] text-2xl font-semibold">
-                            {orderStatusData.reduce((total, item) => total + item.value, 0)}
-                        </text>
-
-                        <text x="50%" y="58%" textAnchor="middle" dominantBaseline="middle" className="fill-[#81766C] text-xs">Total Orders</text>
-
                         <Pie data={orderStatusData} dataKey="value" nameKey="name"
                         innerRadius={65}
                         outerRadius={90}
-                        paddingAngle={4}
-                        label={({ percent }) => `${((percent ?? 0) * 100).toFixed(0)}%`}
-                        labelLine={false}>
+                        paddingAngle={4}>
                             {orderStatusData.map((item) => (
                                 <Cell key={item.name}
                                     fill={
@@ -342,13 +332,6 @@ useEffect(() => {
                                 />
                             ))}
                         </Pie>
-
-                        <Legend verticalAlign="bottom" height={30} iconType="circle" wrapperStyle={{
-                            fontSize: "12px",
-                            color: "#6F5B4B",
-                            }}
-                        />
-
                         <Tooltip contentStyle={{
                             backgroundColor: "#FFFFFF",
                             border: "1px solid #EDE5DB",

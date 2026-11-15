@@ -123,7 +123,7 @@ function Navbar() {
         {activeDrawer && createPortal(
             <div className="fixed inset-0 z-[60]">
                 <button  aria-label="Close drawer" className="absolute inset-0 h-full w-full bg-black/40" onClick={() => setActiveDrawer(null)}/>
-                <div className="drawer-panel fixed right-0 top-0 flex h-dvh w-full max-w-2xl flex-col bg-cream shadow-xl">
+                <div className="drawer-panel fixed right-0 top-0 flex h-dvh w-full max-w-md flex-col bg-cream shadow-xl">
                     <div className="flex items-center justify-between border-b border-[#EDE3D9] px-6 py-5">
 
                     <div>

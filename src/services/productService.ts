@@ -17,19 +17,24 @@ export async function fetchProducts(): Promise<Product[]> {
     const databaseProducts: DatabaseProduct[] = await response.json();
 
     console.table(
-        databaseProducts.map((product) => ({
-            name: product.name,
-            price: product.price,
-            originalPrice: product.originalPrice,
-        }))
-    );
+    databaseProducts.map((product, index) => ({
+        name: product.name,
+        mongoId: product._id,
+        localId: localProducts.find(
+            (item) => item.name === product.name
+        )?.id,
+        assignedId: localProducts.find(
+            (item) => item.name === product.name
+        )?.id ?? localProducts.length + index + 1,
+    }))
+);
 
     return databaseProducts.map((product, index) => ({
         ...product,
 
         id: localProducts.find(
             (localProduct) => localProduct.name === product.name
-        )?.id ?? index + 1,
+        )?.id ?? localProducts.length + index + 1,
         
         mongoId: product._id,
     }));

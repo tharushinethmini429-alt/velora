@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useShop } from "../context/ShopContext";
-import { products } from "../data/products";
 import { Link, useNavigate } from "react-router-dom";
 import {
     Search,
@@ -18,6 +17,7 @@ function Navbar() {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState("");
     const {
+        products,
         cartItems,
         wishlist,
         decreaseQuantity,
@@ -123,7 +123,7 @@ function Navbar() {
         {activeDrawer && createPortal(
             <div className="fixed inset-0 z-[60]">
                 <button  aria-label="Close drawer" className="absolute inset-0 h-full w-full bg-black/40" onClick={() => setActiveDrawer(null)}/>
-                <div className="drawer-panel fixed right-0 top-0 flex h-dvh w-full max-w-md flex-col bg-cream shadow-xl">
+                <div className="drawer-panel fixed right-0 top-0 flex h-dvh w-full max-w-sm flex-col bg-cream shadow-xl">
                     <div className="flex items-center justify-between border-b border-[#EDE3D9] px-6 py-5">
 
                     <div>
